@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-hant-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nature care</title>
+    <script src="https://kit.fontawesome.com/b5c87f0d2e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="topBtn/topBtn.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/comm.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/product.js"></script>
+    <script src="topBtn/topBtn.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    <script>
+        
+        $(function(){
+            $('header').load('headerContent.html');
+            $('footer').load('footerContent.html',function(){
+                mainNavff();
+               
+            });
+            $('#proMenu').load('proMenu.html',function(){
+                proMenuEff(1,1);
+            });
+            // $.ajax({
+            //     type: "載入方法(get)",
+            //     url: "載入對象",
+            //     dataType: "取得的資料型探",
+            //     success: function () {
+            //         '載入失敗'
+            //     },
+            //     success:function(){
+            //         '載入完成(取得)'
+            //     }
+            // });
+
+            $.ajax({
+                type: "get",
+                url: "json/soap.json",
+                dataType: "json",
+                success: function () {
+                    alert('err');
+                },
+                success:function(jData){ //資料存在jData
+                    // alert('ok');
+                    console.log(jData);
+
+                    //物件,屬性
+                    console.log(jData.product);
+                    // console.log(jData.product.soap);
+                    // console.log(jData.product.soap[0]);
+                    // console.log(jData.product.soap[0].name);
+                    var product=jData.product.soap;
+                    var item=''
+                    for(var i=0;i<product.length;i++){
+                        // $('#proList').append('<h2>'+product[i].name+'</h2>');
+
+                        // item='<div class="proItem"><img src="imgsoap/thum/'+product[i].photo+'"><h3>'+ 
+                        //       product[i].name +'</h3><p>'+product[i].desc+'</p><p>'+product[i].ingre+'</p></div>';
+                        // $('#proList').append(item); 效率不好
+
+                        item+='<div class="proItem"><div class="proImg"><a data-fancybox="gallery" href="imgSoap/'+product[i].photo+'" data-caption="<h3>'+product[i].name+'</h3><p>'+product[i].desc+'</p>"><img src="imgSoap/thum/'+product[i].photo+'"></a></div><h3>'+product[i].name +'</h3><p>'+product[i].desc+'</p><p>'+product[i].ingre+'</p></div>';
+                    }
+                            // console.log(item);
+                            $('#proList').html(item);
+                }
+            });
+            setTopBtn();
+            // $('#topBtn').click(function(){
+            //     $('body,html').animate({'scrollTop':0});
+            // });
+
+            // $('#topBtn').css({'top':$(window).height()-$('#topBtn').height()-20});
+            // //視窗重整時
+            // $(window).resize(function(){
+            //     $('#topBtn').css({'top':$(window).height()-$('#topBtn').height()-20});
+            // });
+            // $(window).scroll(function(){
+            //     var scrollOut=$(window).scrollTop();
+            //     var winH=$(window).height();
+            //     var btnH=$('#topBtn').height();
+            //     var moveTo=winH+scrollOut-btnH-20;
+            //     $('#topBtn').stop().animate({'top':moveTo});
+            // })
+        })
+    </script>
+</head>
+<body>
+    <header>
+        
+    </header>
+    <div id="banner">
+        <img src="images/banner.jpg" alt="banner">
+    </div>
+    <main>
+        <nav id="proMenu">
+        </nav>
+        <div id="proList">
+
+        </div>
+        <a id="topBtn">GoTop</a>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
